@@ -16,13 +16,14 @@ body, html {
 }
 
 :root { 
-  --app-primary: #836EF9; 
-  --app-primary-glow: rgba(131, 110, 249, 0.4);
+  /* Primary color matched to logo purple */
+  --app-primary: #8D6BFF; 
+  --app-primary-glow: rgba(141, 107, 255, 0.4);
   --app-bg: #0b0a10; 
   --app-surface: #14121c; 
   --app-bot-bubble: #1e1b29; 
   --app-bot-text: #e0e0e0; 
-  --app-user-bubble: #836EF9; 
+  --app-user-bubble: #8D6BFF; 
   --app-user-text: #ffffff; 
   --app-border: 1px solid #2a2638; 
   --terminal-font: 'Courier New', Courier, monospace;
@@ -93,16 +94,12 @@ body, html {
   color: var(--app-primary);
 }
 
+/* Styled for the big, circular logo image */
 .big-monad-logo {
-  font-size: 70px;
-  font-weight: 900;
-  color: #fff;
-  background: var(--app-primary);
-  width: 140px; height: 140px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
+  display: block;
+  width: 140px; 
+  height: 140px; 
+  object-fit: contain;
   margin: 30px 0;
   animation: monadPulse 3s infinite alternate;
 }
@@ -139,8 +136,8 @@ body, html {
 }
 
 #initiate-btn:hover {
-  background: rgba(131, 110, 249, 0.1);
-  box-shadow: 0 0 20px rgba(131, 110, 249, 0.4), inset 0 0 15px rgba(131, 110, 249, 0.2);
+  background: rgba(141, 107, 255, 0.1);
+  box-shadow: 0 0 20px rgba(141, 107, 255, 0.4), inset 0 0 15px rgba(141, 107, 255, 0.2);
   text-shadow: 0 0 8px var(--app-primary);
 }
 
@@ -170,8 +167,17 @@ body, html {
 
 .app-header-left { display: flex; align-items: center; gap: 12px; }
 
+/* Bot Avatar styled to display the circular image */
 .bot-avatar { 
-  width: 36px; height: 36px; background: var(--app-primary); border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: 900; font-size: 20px; color: #fff; animation: monadPulse 2s infinite ease-in-out; flex-shrink: 0; box-shadow: 0 4px 10px rgba(131, 110, 249, 0.3); 
+  width: 36px; height: 36px; 
+  display: flex; justify-content: center; align-items: center; 
+  animation: monadPulse 2s infinite ease-in-out; 
+  flex-shrink: 0; 
+}
+.bot-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Centers and scales the circular logo */
 }
 
 .glitch-title { display: inline-block; animation: monadGlitch 5s infinite; letter-spacing: 0.5px; }
@@ -195,7 +201,7 @@ body, html {
 }
 
 .monad-user-bubble { 
-  white-space: pre-wrap; color: var(--app-user-text); align-self: flex-end; max-width: 85%; background: var(--app-user-bubble); padding: 14px 20px; border-radius: 20px 4px 20px 20px; box-shadow: 0 4px 15px rgba(131, 110, 249, 0.2); 
+  white-space: pre-wrap; color: var(--app-user-text); align-self: flex-end; max-width: 85%; background: var(--app-user-bubble); padding: 14px 20px; border-radius: 20px 4px 20px 20px; box-shadow: 0 4px 15px rgba(141, 107, 255, 0.2); 
 }
 
 #monad-input-footer { 
@@ -206,7 +212,7 @@ body, html {
   flex: 1; background: var(--app-bg); border: 1px solid #332d4a; color: #fff; padding: 15px 20px; outline: none; border-radius: 12px; font-size: 15px; transition: 0.3s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); 
 }
 
-#monad-input-text:focus { border-color: var(--app-primary); box-shadow: 0 0 0 2px rgba(131, 110, 249, 0.2); }
+#monad-input-text:focus { border-color: var(--app-primary); box-shadow: 0 0 0 2px rgba(141, 107, 255, 0.2); }
 #monad-input-text::placeholder { color: #6b6485; }
 #monad-input-text:read-only { background: #110f18; color: #4a455c; cursor: not-allowed; border-color: #221e30; }
 
@@ -214,7 +220,7 @@ body, html {
   width: 48px; height: 48px; border-radius: 12px; background: var(--app-primary); border: none; cursor: pointer; color: #fff; display: flex; justify-content: center; align-items: center; flex-shrink: 0; transition: 0.2s; font-size: 18px; 
 }
 
-#monad-send-btn:hover { background: #9b8bfc; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(131, 110, 249, 0.4); }
+#monad-send-btn:hover { background: #ab8eff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(141, 107, 255, 0.4); }
 #monad-send-btn:disabled { background: #332d4a; color: #6b6485; cursor: not-allowed; box-shadow: none; transform: none; }
 
 .typing-indicator { font-family: var(--terminal-font); font-style: italic; color: var(--app-primary); opacity: 0.8; animation: blinkText 1.5s infinite ease-in-out; border-left: none; background: transparent; padding: 0; box-shadow: none; }
@@ -222,10 +228,10 @@ body, html {
 @media (max-width: 600px) {
   .splash-corners .corner { display: none; } /* Clean up mobile view */
   .splash-title { font-size: 30px; }
-  .big-monad-logo { width: 100px; height: 100px; font-size: 50px; }
+  .big-monad-logo { width: 100px; height: 100px; }
   
   #monad-title-bar { font-size: 18px; padding: 12px 15px; } 
-  .bot-avatar { width: 30px; height: 30px; font-size: 16px; } 
+  .bot-avatar { width: 30px; height: 30px; } 
   #monad-chat-box { font-size: 14px; padding: 15px; } 
   .monad-msg-row { margin-bottom: 15px; } 
   .monad-bot-bubble, .monad-user-bubble { max-width: 90%; padding: 12px 16px; } 
@@ -238,4 +244,4 @@ body, html {
   #monad-chat-window { max-width: 800px; margin: 0 auto; border-left: var(--app-border); border-right: var(--app-border); box-shadow: 0 0 30px rgba(0,0,0,0.5); } 
   .monad-bot-bubble, .monad-user-bubble { max-width: 70%; } 
   }
-  
+    
