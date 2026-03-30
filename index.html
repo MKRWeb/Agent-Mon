@@ -4,13 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
   <title>Monad Agent Hub</title>
-  
-  <!-- Link to external CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div id="monad-chat-window">
+  
+  <div id="monad-splash-screen">
+    <div class="splash-corners">
+      <div class="corner top-left">MONAD-01 ◆ LOCKED</div>
+      <div class="corner top-right">X 0904<br>Y 1000</div>
+      <div class="corner bottom-left">MONAD / AGENT · v1.0</div>
+      <div class="corner bottom-right synced">SYNCED</div>
+    </div>
+    
+    <div class="splash-content">
+      <div class="splash-subtitle">MONAD × PARALLEL EVM</div>
+      
+      <div class="splash-logo-container">
+        <div class="big-monad-logo">M</div>
+      </div>
+      
+      <h1 class="splash-title">AGENT HUB</h1>
+      <div class="splash-powered">POWERED BY 10,000 TPS</div>
+      
+      <button id="initiate-btn">[ INITIATE SEQUENCE ]</button>
+    </div>
+  </div>
+
+  <div id="monad-chat-window" class="hidden-chat">
     <div id="monad-title-bar">
       <div class="app-header-left">
         <div class="bot-avatar">M</div>
@@ -33,7 +54,6 @@
     </div>
   </div>
 
-  <!-- Link to external JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
