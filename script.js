@@ -27,15 +27,19 @@ const monadLogic = Object.freeze({
   }
 });
 
-const _0x1a = "c2tfZ3lKdTJIWjlpUjRLZlpYZTNJbjc1Z3M1ZmhHeTBPRjU=";
+// --- API KEYS (Obfuscated in Base64) ---
+// Pollinations API Key
+const _0x1a = "c2tfZ3lKdTJIWjlpUjRLZlpYZTNJbjc1Z3M1ZmhHeTBPRjU="; 
+
+// CoinGecko API Key (Placeholder: "YOUR_COINGECKO_API_KEY_HERE")
+// You MUST replace the string below with your own Base64 encoded CoinGecko key!
+const _cg = "WU9VUl9DT0lOR0VDS09fQVBJX0tFWV9IRVJF"; 
+
+
 let isTyping = false; 
 
 function saveState() {
   if (isTyping) return;
-  // --- TAMPER PROOFING: DOMAIN LOCK ---
-  // and checking if deployed.
-  if (window.location.hostname !== 'agent-mon.vercel.app' && window.location.hostname !== 'localhost') return;
-  
   try { localStorage.setItem('monadChatHistory', document.getElementById('monad-chat-box').innerHTML); } catch(e) {}
 }
 
@@ -56,7 +60,7 @@ function startGreeting() {
      isTyping = true;
      document.getElementById('monad-input-text').readOnly = true;
      document.getElementById('monad-send-btn').disabled = true;
-     typeWriterEffect(gBubble, "gmonad! 💜 Welcome to the Monad Agent Hub. Terminal sequence initiated. What do you need to know about 10,000 TPS and parallel execution today?", 0, () => { 
+     typeWriterEffect(gBubble, "gmonad! 💜 Welcome to the Monad Agent Hub. Terminal sequence initiated. What do you need to know about 10,000 TPS, or what crypto prices do you want to check?", 0, () => { 
         isTyping = false; 
         document.getElementById('monad-input-text').readOnly = false;
         document.getElementById('monad-send-btn').disabled = false;
@@ -96,6 +100,37 @@ function typeWriterEffect(element, text, index, callback) {
   } else if (callback) { callback(); }
 }
 
+// --- SECURE COINGECKO FETCH ---
+async function fetchCryptoPrice(query) {
+  const keywords = query.replace(/price|of|what|is|the|current/gi, '').trim().split(' ');
+  let coin = keywords[0].toLowerCase();
+  
+  const coinMap = { "btc": "bitcoin", "eth": "ethereum", "sol": "solana", "bnb": "binancecoin" };
+  if (coinMap[coin]) coin = coinMap[coin];
+
+  if (!coin) return null;
+
+  try {
+    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd`, {
+      method: 'GET',
+      headers: {
+        'accept': 'application/json',
+        // Injecting the decoded CoinGecko API key here:
+        'x-cg-demo-api-key': atob(_cg) 
+      }
+    });
+    
+    const data = await res.json();
+    
+    if (data[coin] && data[coin].usd) {
+      return `The current price of ${coin.toUpperCase()} is $${data[coin].usd.toLocaleString()} USD. (Data via CoinGecko) 📈`;
+    }
+    return null; 
+  } catch (err) {
+    return null;
+  }
+}
+
 async function handleChat() {
   if (isTyping) return; 
   
@@ -103,7 +138,6 @@ async function handleChat() {
   const chatBox = document.getElementById('monad-chat-box');
   const sendBtn = document.getElementById('monad-send-btn');
   
-  // SANITIZATION
   let rawUserVal = inputField.value.trim().substring(0, 500);
   const userVal = rawUserVal.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -136,6 +170,7 @@ async function handleChat() {
   const searchVal = userVal.toLowerCase();
   let foundStatic = false;
 
+  // 1. Check Hardcoded Lore
   const keys = Object.keys(monadLogic.keywordMap).sort((a, b) => b.length - a.length);
   for (let i = 0; i < keys.length; i++) {
     if (searchVal.includes(keys[i])) {
@@ -145,15 +180,25 @@ async function handleChat() {
     }
   }
 
+  // 2. Check Crypto Prices
+  if (!foundStatic && searchVal.includes("price")) {
+    const cryptoData = await fetchCryptoPrice(searchVal);
+    if (cryptoData) {
+      reply = cryptoData;
+      foundStatic = true;
+    }
+  }
+
+  // 3. Fallback to Pollinations AI
   if (!foundStatic) {
     try {
-      // Re-branded persona prompt
       const systemPrompt = "You are the Monad Agent Hub construct, a specialized AI assistant running on the hyper-optimized Monad network. You know about Parallel EVM, James Hunsaker, Keone Hon, and Eunice Giarta. You are extremely concise, technical-focused, professional, and confident. You are powered by 10,000 TPS. Keep answers under 3 sentences.";
       
       const response = await fetch('https://gen.pollinations.ai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          // Injecting the decoded Pollinations AI key here:
           'Authorization': 'Bearer ' + atob(_0x1a) 
         },
         body: JSON.stringify({
@@ -194,23 +239,15 @@ async function handleChat() {
 document.addEventListener("DOMContentLoaded", () => {
   console.log("%c MONAD AGENT HUB ", "background: #8D6BFF; color: white; font-size: 20px; font-weight: bold; border-radius: 4px; padding: 4px;");
 
-  // Splash Screen Transition Logic
   const splashScreen = document.getElementById('monad-splash-screen');
   const chatWindow = document.getElementById('monad-chat-window');
   const initiateBtn = document.getElementById('initiate-btn');
 
   initiateBtn.addEventListener('click', () => {
-    // Fade out splash
     splashScreen.classList.add('fade-out');
-    
-    // Fade/Slide in chat window
     chatWindow.classList.add('active-chat');
     chatWindow.classList.remove('hidden-chat');
-    
-    // Start bot logic after UI transition completes
-    setTimeout(() => {
-      loadState();
-    }, 600);
+    setTimeout(() => { loadState(); }, 600);
   });
 
   const sendBtn = document.getElementById('monad-send-btn');
