@@ -16,7 +16,7 @@ body, html {
 }
 
 :root { 
-  var(--app-primary): #8D6BFF; 
+  --app-primary: #8D6BFF; 
   --app-primary-glow: rgba(141, 107, 255, 0.4);
   --app-bg: #0b0a10; 
   --app-surface: #14121c; 
@@ -69,10 +69,40 @@ body, html {
 .splash-title { font-size: 42px; margin: 0; font-weight: 800; letter-spacing: 6px; text-shadow: 0 0 15px var(--app-primary-glow); }
 .splash-powered { font-family: var(--terminal-font); font-size: 13px; letter-spacing: 3px; color: #888; margin-bottom: 40px; }
 
+/* --- UPDATED INITIATE BUTTON WITH ANIMATION --- */
 #initiate-btn {
-  background: transparent; border: 1px solid var(--app-primary); color: var(--app-primary); font-size: 16px; padding: 18px 35px; letter-spacing: 3px; font-family: var(--terminal-font); cursor: pointer; transition: all 0.3s; text-transform: uppercase; position: relative; overflow: hidden;
+  background: transparent; 
+  border: 1px solid var(--app-primary); 
+  color: var(--app-primary); 
+  font-size: 16px; 
+  padding: 18px 35px; 
+  letter-spacing: 3px; 
+  font-family: var(--terminal-font); 
+  cursor: pointer; 
+  transition: all 0.3s; 
+  text-transform: uppercase; 
+  position: relative; 
+  overflow: hidden;
+  animation: initiatePulse 2s infinite alternate ease-in-out;
 }
-#initiate-btn:hover { background: rgba(141, 107, 255, 0.1); box-shadow: 0 0 20px rgba(141, 107, 255, 0.4), inset 0 0 15px rgba(141, 107, 255, 0.2); text-shadow: 0 0 8px var(--app-primary); }
+
+#initiate-btn:hover { 
+  background: rgba(141, 107, 255, 0.15); 
+  box-shadow: 0 0 25px rgba(141, 107, 255, 0.6), inset 0 0 15px rgba(141, 107, 255, 0.3); 
+  text-shadow: 0 0 10px #ffffff;
+  transform: scale(1.02);
+}
+
+@keyframes initiatePulse {
+  0% {
+    box-shadow: 0 0 5px rgba(141, 107, 255, 0.1);
+    text-shadow: 0 0 2px rgba(141, 107, 255, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(141, 107, 255, 0.5), inset 0 0 8px rgba(141, 107, 255, 0.2);
+    text-shadow: 0 0 8px var(--app-primary);
+  }
+}
 
 /* =========================================
    CHAT WINDOW STYLES
@@ -134,4 +164,4 @@ body, html {
   #monad-chat-window { max-width: 800px; margin: 0 auto; border-left: var(--app-border); border-right: var(--app-border); box-shadow: 0 0 30px rgba(0,0,0,0.5); } 
   .monad-bot-bubble, .monad-user-bubble { max-width: 70%; } 
   }
-                                
+                              
