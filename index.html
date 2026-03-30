@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <title>Monad Agent Hub</title>
+  
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="monad-chat-window">
+    <div id="monad-title-bar">
+      <div class="app-header-left">
+        <div class="bot-avatar">M</div>
+        <span class="glitch-title">Monad Agent</span>
+      </div>
+      <div class="app-header-right">
+        <span id="clear-chat-btn" title="Clear Terminal">⟳</span>
+      </div>
+    </div>
+    
+    <div id="monad-chat-box">
+      <div class="monad-msg-row" id="default-greeting">
+        <span class="monad-bot-bubble" id="greeting-bubble"></span>
+      </div>
+    </div>
+    
+    <div id="monad-input-footer">
+      <input id="monad-input-text" placeholder="Execute command or ask about Monad..." type="text" autocomplete="off" />
+      <button id="monad-send-btn">&#10148;</button>
+    </div>
+  </div>
+
+  <!-- Link to external JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
