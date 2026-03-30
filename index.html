@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-  <title>Monad Agent Hub</title>
+  <!-- Crucial for Mobile: Prevents auto-zoom on input tap and fits notches -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover">
+  <title>Agent Mon</title>
   
-  <!-- Link to external CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -38,7 +38,6 @@
   <div id="monad-chat-window" class="hidden-chat">
     <div id="monad-title-bar">
       <div class="app-header-left">
-        <!-- SPA Back Button -->
         <span id="back-to-splash-btn" title="Return to Home">❮</span>
         
         <div class="bot-avatar">
@@ -58,12 +57,11 @@
     </div>
     
     <div id="monad-input-footer">
-      <input id="monad-input-text" placeholder="Execute command or ask about Monad..." type="text" autocomplete="off" />
+      <input id="monad-input-text" placeholder="Execute command..." type="text" autocomplete="off" />
       <button id="monad-send-btn">&#10148;</button>
     </div>
   </div>
 
-  <!-- Link to external JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
