@@ -12,8 +12,6 @@ const monadLogic = Object.freeze({
     "eunice": "Eunice Giarta is the COO and co-founder of Monad Labs.",
     "token": "The native utility and governance token of the network is MONAD.",
     "monadbft": "MonadBFT is our high-performance consensus mechanism. It achieves agreement across the network in just 1 second.",
-    
-    // Updated Mainnet status
     "mainnet": "Monad is officially live on Mainnet! The network is actively processing 10,000 TPS with single-slot finality, powering the next generation of decentralized applications.",
     "testnet": "While our testnet served as the ultimate proving ground for Parallel EVM and MonadBFT, Monad has successfully graduated to full Mainnet deployment.",
 
@@ -30,10 +28,18 @@ const monadLogic = Object.freeze({
 });
 
 // --- API KEYS (Obfuscated in Base64) ---
-const _0x1a = "c2tfZ3lKdTJIWjlpUjRLZlpYZTNJbjc1Z3M1ZmhHeTBPRjU="; // Pollinations Key
-const _cg = "WU9VUl9DT0lOR0VDS09fQVBJX0tFWV9IRVJF"; // Replace with your base64 CoinGecko Demo Key
+const _0x1a = "c2tfZ3lKdTJIWjlpUjRLZlpYZTNJbjc1Z3M1ZmhHeTBPRjU="; 
+const _cg = "WU9VUl9DT0lOR0VDS09fQVBJX0tFWV9IRVJF"; 
 
 let isTyping = false; 
+
+// Smooth Scroll Algorithm
+function scrollToBottom() {
+  const chatBox = document.getElementById('monad-chat-box');
+  requestAnimationFrame(() => {
+    chatBox.scrollTop = chatBox.scrollHeight;
+  });
+}
 
 function saveState() {
   if (isTyping) return;
@@ -46,7 +52,7 @@ function loadState() {
     const chatBox = document.getElementById('monad-chat-box');
     if (history && history.trim() !== '') {
       chatBox.innerHTML = history;
-      setTimeout(() => { chatBox.scrollTop = chatBox.scrollHeight; }, 100);
+      setTimeout(scrollToBottom, 100);
     } else { startGreeting(); }
   } catch(e) { startGreeting(); }
 }
@@ -84,15 +90,13 @@ function clearChat() {
 function typeWriterEffect(element, text, index, callback) {
   if (document.hidden) {
     element.textContent = text;
-    const chatBox = document.getElementById('monad-chat-box');
-    if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+    scrollToBottom();
     if (callback) callback();
     return;
   }
   if (index < text.length) {
     element.textContent += text.charAt(index);
-    const chatBox = document.getElementById('monad-chat-box');
-    chatBox.scrollTop = chatBox.scrollHeight;
+    scrollToBottom();
     setTimeout(() => typeWriterEffect(element, text, index + 1, callback), 10);
   } else if (callback) { callback(); }
 }
@@ -102,7 +106,7 @@ async function fetchCryptoPrice(query) {
   const keywords = query.replace(/price|of|what|is|the|current/gi, '').trim().split(' ');
   let coin = keywords[0].toLowerCase();
   
-  const coinMap = { "btc": "bitcoin", "eth": "ethereum", "sol": "solana", "bnb": "binancecoin" };
+  const coinMap = { "btc": "bitcoin", "eth": "ethereum", "sol": "solana", "bnb": "binancecoin", "monad": "monad" };
   if (coinMap[coin]) coin = coinMap[coin];
 
   if (!coin) return null;
@@ -147,20 +151,20 @@ async function handleChat() {
   uRow.appendChild(uBubble);
   chatBox.appendChild(uRow);
   
+  scrollToBottom();
   saveState();
 
   inputField.value = '';
   inputField.readOnly = true; 
   sendBtn.disabled = true;
   inputField.blur(); 
-  chatBox.scrollTop = chatBox.scrollHeight;
   isTyping = true;
 
   const typingDiv = document.createElement("div");
   typingDiv.className = "monad-msg-row";
   typingDiv.innerHTML = '<span class="monad-bot-bubble typing-indicator">> processing...</span>';
   chatBox.appendChild(typingDiv);
-  chatBox.scrollTop = chatBox.scrollHeight;
+  scrollToBottom();
 
   let reply = "";
   const searchVal = userVal.toLowerCase();
@@ -227,6 +231,10 @@ async function handleChat() {
       isTyping = false;
       inputField.readOnly = false; 
       sendBtn.disabled = false;
+      // Auto-focus logic for desktop only (prevents mobile keyboard jump)
+      if (window.innerWidth > 768) {
+        inputField.focus();
+      }
       saveState(); 
   });
 }
@@ -239,13 +247,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const chatWindow = document.getElementById('monad-chat-window');
   const initiateBtn = document.getElementById('initiate-btn');
   const backBtn = document.getElementById('back-to-splash-btn');
+  const inputField = document.getElementById('monad-input-text');
 
-  // SPA Nav functions
   function openChatUI() {
     splashScreen.classList.add('fade-out');
     chatWindow.classList.add('active-chat');
     chatWindow.classList.remove('hidden-chat');
-    setTimeout(() => { loadState(); }, 600);
+    setTimeout(() => { 
+      loadState(); 
+      // Auto-focus input on desktop after transition
+      if (window.innerWidth > 768) {
+        inputField.focus();
+      }
+    }, 500);
   }
 
   function closeChatUI() {
@@ -254,14 +268,12 @@ document.addEventListener("DOMContentLoaded", () => {
     splashScreen.classList.remove('fade-out');
   }
 
-  // 1. INITIATE BUTTON
   initiateBtn.addEventListener('click', (e) => {
     e.preventDefault(); 
     history.pushState({ page: 'chat' }, 'Chat', '#chat'); 
     openChatUI();
   });
 
-  // 2. UI BACK BUTTON ("❮")
   if (backBtn) {
     backBtn.addEventListener('click', (e) => {
       e.preventDefault(); 
@@ -269,7 +281,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 3. BROWSER/PHONE BACK SWIPE INTERCEPTOR
   window.addEventListener('popstate', () => {
     if (window.location.hash !== '#chat') {
       closeChatUI();
@@ -278,16 +289,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Init chat listeners
   const sendBtn = document.getElementById('monad-send-btn');
   if(sendBtn) sendBtn.addEventListener('click', handleChat);
   
-  const inputField = document.getElementById('monad-input-text');
   if(inputField) {
     inputField.addEventListener('keypress', (e) => {
       if (e.key === 'Enter' || e.keyCode === 13) { 
         e.preventDefault(); 
-        inputField.blur(); 
         handleChat(); 
       }
     });
@@ -296,4 +304,4 @@ document.addEventListener("DOMContentLoaded", () => {
   const clearBtn = document.getElementById('clear-chat-btn');
   if(clearBtn) clearBtn.addEventListener('click', clearChat);
 });
-      
+                                
