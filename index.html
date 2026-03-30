@@ -4,11 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
   <title>Agent Mon</title>
+  
+  <!-- Link to external CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   
+  <!-- INTERFACE 1: SPLASH SCREEN -->
   <div id="monad-splash-screen">
     <div class="splash-corners">
       <div class="corner top-left">MONAD-01 ◆ LOCKED</div>
@@ -21,7 +24,6 @@
       <div class="splash-subtitle">MONAD × PARALLEL EVM</div>
       
       <div class="splash-logo-container">
-        <!-- Updated to monad-logo.png -->
         <img src="monad-logo.png" class="big-monad-logo" alt="Monad Logo" />
       </div>
       
@@ -32,14 +34,17 @@
     </div>
   </div>
 
+  <!-- INTERFACE 2: CHAT WINDOW -->
   <div id="monad-chat-window" class="hidden-chat">
     <div id="monad-title-bar">
       <div class="app-header-left">
+        <!-- New Back Button -->
+        <span id="back-to-splash-btn" title="Return to Home">❮</span>
+        
         <div class="bot-avatar">
-          <!-- Updated to monad-logo.png -->
           <img src="monad-logo.png" alt="Monad Logo" />
         </div>
-        <span class="glitch-title">Agent Mon </span>
+        <span class="glitch-title">Agent Mon</span>
       </div>
       <div class="app-header-right">
         <span id="clear-chat-btn" title="Clear Terminal">🧹</span>
@@ -58,6 +63,7 @@
     </div>
   </div>
 
+  <!-- Link to external JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
