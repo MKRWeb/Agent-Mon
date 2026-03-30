@@ -4,37 +4,34 @@ const monadLogic = Object.freeze({
     // --- MONAD CORE LORE & TECH ---
     "what is monad": "Monad is a highly optimized, EVM-compatible Layer 1 blockchain designed to process 10,000 transactions per second (TPS) with 1-second block times and single-slot finality.",
     "tps": "Monad achieves a blistering 10,000 TPS (Transactions Per Second). We do this by fundamentally optimizing the execution layer while maintaining full EVM compatibility.",
-    "parallel evm": "Parallel EVM is our secret weapon. Instead of processing transactions one by one, Monad identifies independent transactions and executes them simultaneously, maximizing throughput without breaking Ethereum compatibility.",
+    "parallel evm": "Parallel EVM is our secret weapon. Instead of processing transactions one by one, Monad identifies independent transactions and executes them simultaneously.",
     "founders": "The architects of the Monad network are Keone Hon, James Hunsaker, and Eunice Giarta. They bring deep expertise from high-frequency trading and scalable systems.",
-    "founder": "Monad was founded by Keone Hon, James Hunsaker, and Eunice Giarta, combining traditional finance engineering with decentralized architecture.",
-    "keone": "Keone Hon is the CEO and co-founder of Monad Labs. Before Monad, he spent 8 years at Jump Trading leading a high-frequency trading team.",
+    "founder": "Monad was founded by Keone Hon, James Hunsaker, and Eunice Giarta.",
+    "keone": "Keone Hon is the CEO and co-founder of Monad Labs. Before Monad, he spent 8 years at Jump Trading.",
     "james": "James Hunsaker is the CTO and co-founder of Monad Labs. He previously built ultra-low-latency trading systems at Jump Trading.",
-    "eunice": "Eunice Giarta is the COO and co-founder of Monad Labs. She brings extensive experience from traditional tech and finance, previously working at Broadway Technology and Shutterstock.",
-    "gmonad": "gmonad! 💜 Welcome to the fastest ecosystem in Web3.",
+    "eunice": "Eunice Giarta is the COO and co-founder of Monad Labs.",
     "token": "The native utility and governance token of the network is MONAD.",
-    "monadbft": "MonadBFT is our high-performance consensus mechanism. It's a pipelined HotStuff derivative that achieves agreement across the network in just 1 second.",
-    // 👇 THESE TWO LINES ARE UPDATED 👇
+    "monadbft": "MonadBFT is our high-performance consensus mechanism. It achieves agreement across the network in just 1 second.",
+    
+    // Updated Mainnet status
     "mainnet": "Monad is officially live on Mainnet! The network is actively processing 10,000 TPS with single-slot finality, powering the next generation of decentralized applications.",
     "testnet": "While our testnet served as the ultimate proving ground for Parallel EVM and MonadBFT, Monad has successfully graduated to full Mainnet deployment.",
+
     // --- CULTURE & GREETINGS ---
+    "gmonad": "gmonad! 💜 Welcome to the fastest ecosystem in Web3.",
     "hello": "gmonad! 💜 How can I assist you with the Monad ecosystem today?",
     "hi": "gmonad! 💜 Ready to explore 10,000 TPS?",
     "hey": "gmonad! 💜 State your query.",
     "gm": "gmonad! 💜 The sun is shining and the blocks are processing at 1-second intervals.",
     "who are you": "I am the Monad Agent Hub construct, designed to provide ultra-fast, optimized answers for the ecosystem. I use the 💜 emoji because parallel execution fills me with love.",
-    "who created you": "I am a digital native of the Monad Hub, designed by the architect @mkr_web.",
+    "who created you": "I am a digital native of the Monad Hub, designed by the architects of the network.",
     "nads": "The Nads are the heart of our community! A passionate group of builders and believers pushing the boundaries of what EVM can do."
   }
 });
 
 // --- API KEYS (Obfuscated in Base64) ---
-// Pollinations API Key
-const _0x1a = "c2tfZ3lKdTJIWjlpUjRLZlpYZTNJbjc1Z3M1ZmhHeTBPRjU="; 
-
-// CoinGecko API Key (Placeholder: "YOUR_COINGECKO_API_KEY_HERE")
-// You MUST replace the string below with your own Base64 encoded CoinGecko key!
-const _cg = "WU9VUl9DT0lOR0VDS09fQVBJX0tFWV9IRVJF"; 
-
+const _0x1a = "c2tfZ3lKdTJIWjlpUjRLZlpYZTNJbjc1Z3M1ZmhHeTBPRjU="; // Pollinations Key
+const _cg = "WU9VUl9DT0lOR0VDS09fQVBJX0tFWV9IRVJF"; // Replace with your base64 CoinGecko Demo Key
 
 let isTyping = false; 
 
@@ -115,7 +112,6 @@ async function fetchCryptoPrice(query) {
       method: 'GET',
       headers: {
         'accept': 'application/json',
-        // Injecting the decoded CoinGecko API key here:
         'x-cg-demo-api-key': atob(_cg) 
       }
     });
@@ -189,7 +185,7 @@ async function handleChat() {
     }
   }
 
-  // 3. Fallback to Pollinations AI
+  // 3. Fallback to AI API
   if (!foundStatic) {
     try {
       const systemPrompt = "You are the Monad Agent Hub construct, a specialized AI assistant running on the hyper-optimized Monad network. You know about Parallel EVM, James Hunsaker, Keone Hon, and Eunice Giarta. You are extremely concise, technical-focused, professional, and confident. You are powered by 10,000 TPS. Keep answers under 3 sentences.";
@@ -198,7 +194,6 @@ async function handleChat() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // Injecting the decoded Pollinations AI key here:
           'Authorization': 'Bearer ' + atob(_0x1a) 
         },
         body: JSON.stringify({
@@ -236,31 +231,69 @@ async function handleChat() {
   });
 }
 
+// --- DOM READY & SPA ROUTING LOGIC ---
 document.addEventListener("DOMContentLoaded", () => {
   console.log("%c MONAD AGENT HUB ", "background: #8D6BFF; color: white; font-size: 20px; font-weight: bold; border-radius: 4px; padding: 4px;");
 
   const splashScreen = document.getElementById('monad-splash-screen');
   const chatWindow = document.getElementById('monad-chat-window');
   const initiateBtn = document.getElementById('initiate-btn');
+  const backBtn = document.getElementById('back-to-splash-btn');
 
-  initiateBtn.addEventListener('click', () => {
+  // SPA Nav functions
+  function openChatUI() {
     splashScreen.classList.add('fade-out');
     chatWindow.classList.add('active-chat');
     chatWindow.classList.remove('hidden-chat');
     setTimeout(() => { loadState(); }, 600);
+  }
+
+  function closeChatUI() {
+    chatWindow.classList.remove('active-chat');
+    chatWindow.classList.add('hidden-chat');
+    splashScreen.classList.remove('fade-out');
+  }
+
+  // 1. INITIATE BUTTON
+  initiateBtn.addEventListener('click', (e) => {
+    e.preventDefault(); 
+    history.pushState({ page: 'chat' }, 'Chat', '#chat'); 
+    openChatUI();
   });
 
+  // 2. UI BACK BUTTON ("❮")
+  if (backBtn) {
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault(); 
+      history.back(); 
+    });
+  }
+
+  // 3. BROWSER/PHONE BACK SWIPE INTERCEPTOR
+  window.addEventListener('popstate', () => {
+    if (window.location.hash !== '#chat') {
+      closeChatUI();
+    } else {
+      openChatUI();
+    }
+  });
+
+  // Init chat listeners
   const sendBtn = document.getElementById('monad-send-btn');
   if(sendBtn) sendBtn.addEventListener('click', handleChat);
   
   const inputField = document.getElementById('monad-input-text');
   if(inputField) {
     inputField.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' || e.keyCode === 13) { e.preventDefault(); inputField.blur(); handleChat(); }
+      if (e.key === 'Enter' || e.keyCode === 13) { 
+        e.preventDefault(); 
+        inputField.blur(); 
+        handleChat(); 
+      }
     });
   }
   
   const clearBtn = document.getElementById('clear-chat-btn');
   if(clearBtn) clearBtn.addEventListener('click', clearChat);
 });
-    
+      
