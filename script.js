@@ -13,16 +13,16 @@ const monadLogic = Object.freeze({
     "gmonad": "gmonad! 💜 Welcome to the fastest ecosystem in Web3.",
     "token": "The native utility and governance token of the network is MONAD.",
     "monadbft": "MonadBFT is our high-performance consensus mechanism. It's a pipelined HotStuff derivative that achieves agreement across the network in just 1 second.",
-    "mainnet": "Monad is currently in its testnet phases, rigorously testing our 10,000 TPS capabilities before the official Mainnet launch.",
-    "testnet": "The Monad testnet is the proving ground for our Parallel EVM and MonadBFT consensus. Stay tuned to official channels for participation details.",
-
+    // 👇 THESE TWO LINES ARE UPDATED 👇
+    "mainnet": "Monad is officially live on Mainnet! The network is actively processing 10,000 TPS with single-slot finality, powering the next generation of decentralized applications.",
+    "testnet": "While our testnet served as the ultimate proving ground for Parallel EVM and MonadBFT, Monad has successfully graduated to full Mainnet deployment.",
     // --- CULTURE & GREETINGS ---
     "hello": "gmonad! 💜 How can I assist you with the Monad ecosystem today?",
     "hi": "gmonad! 💜 Ready to explore 10,000 TPS?",
     "hey": "gmonad! 💜 State your query.",
     "gm": "gmonad! 💜 The sun is shining and the blocks are processing at 1-second intervals.",
     "who are you": "I am the Monad Agent Hub construct, designed to provide ultra-fast, optimized answers for the ecosystem. I use the 💜 emoji because parallel execution fills me with love.",
-    "who created you": "I am a digital native of the Monad Hub, designed by the architects of the network.",
+    "who created you": "I am a digital native of the Monad Hub, designed by the architect @mkr_web.",
     "nads": "The Nads are the heart of our community! A passionate group of builders and believers pushing the boundaries of what EVM can do."
   }
 });
