@@ -38,7 +38,9 @@ function loadState() {
     if (history && history.trim() !== '') {
       chatBox.innerHTML = history;
       setTimeout(() => { chatBox.scrollTop = chatBox.scrollHeight; }, 100);
-    } else { startGreeting(); }
+    } else { 
+      startGreeting(); 
+    }
   } catch(e) { startGreeting(); }
 }
 
@@ -182,18 +184,37 @@ async function handleChat() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadState();
   console.log("%c MONAD AGENT HUB ", "background: #836EF9; color: white; font-size: 20px; font-weight: bold; border-radius: 4px; padding: 4px;");
+
+  // Splash Screen Transition Logic
+  const splashScreen = document.getElementById('monad-splash-screen');
+  const chatWindow = document.getElementById('monad-chat-window');
+  const initiateBtn = document.getElementById('initiate-btn');
+
+  initiateBtn.addEventListener('click', () => {
+    // Fade out splash
+    splashScreen.classList.add('fade-out');
+    
+    // Fade/Slide in chat window
+    chatWindow.classList.add('active-chat');
+    chatWindow.classList.remove('hidden-chat');
+    
+    // Start bot logic after UI transition completes
+    setTimeout(() => {
+      loadState();
+    }, 600);
+  });
 
   const sendBtn = document.getElementById('monad-send-btn');
   if(sendBtn) sendBtn.addEventListener('click', handleChat);
+  
   const inputField = document.getElementById('monad-input-text');
   if(inputField) {
     inputField.addEventListener('keypress', (e) => {
       if (e.key === 'Enter' || e.keyCode === 13) { e.preventDefault(); inputField.blur(); handleChat(); }
     });
   }
+  
   const clearBtn = document.getElementById('clear-chat-btn');
   if(clearBtn) clearBtn.addEventListener('click', clearChat);
 });
-
