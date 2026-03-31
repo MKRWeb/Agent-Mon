@@ -192,7 +192,7 @@ async function handleChat() {
   // 3. Fallback to AI API
   if (!foundStatic) {
     try {
-      const systemPrompt = "You are the Monad Agent Hub construct, a specialized AI assistant running on the hyper-optimized Monad network. You know about Parallel EVM, James Hunsaker, Keone Hon, and Eunice Giarta. You are extremely concise, technical-focused, professional, and confident. You are powered by 10,000 TPS. Keep answers under 3 sentences.";
+      const systemPrompt = "You are the Agent Mon construct, a specialized AI assistant running on the hyper-optimized Monad network. You know about Parallel EVM, James Hunsaker, Keone Hon, and Eunice Giarta. You are extremely concise, technical-focused, professional, and confident. You are powered by 10,000 TPS. Keep answers under 3 sentences.";
       
       const response = await fetch('https://gen.pollinations.ai/v1/chat/completions', {
         method: 'POST',
@@ -212,10 +212,10 @@ async function handleChat() {
         const data = await response.json();
         reply = data.choices[0].message.content;
       } else {
-        reply = "Error: Sequence reversion. Block execution failure. Pollinations API rejected the connection.";
+        reply = "Hmm...Bad Connection: Sequence reversion. Block execution failure. .";
       }
      } catch (error) {
-       reply = "Sequence error. Verify node sync. (Network Error).";
+       reply = "Opps...Sequence Error. Verify sync. (Network Error).";
     }
   }
 
