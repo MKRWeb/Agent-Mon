@@ -63,7 +63,7 @@ function startGreeting() {
      isTyping = true;
      document.getElementById('monad-input-text').readOnly = true;
      document.getElementById('monad-send-btn').disabled = true;
-     typeWriterEffect(gBubble, "gmonad! 💜 Welcome to the Monad Agent Hub. Terminal sequence initiated. What do you need to know about 10,000 TPS, or what crypto prices do you want to check?", 0, () => { 
+     typeWriterEffect(gBubble, "gmonad! 💜 Welcome to the Agent Mon. Terminal sequence initiated. What do you need to know about 10,000 TPS, or want to know about Monad?", 0, () => { 
         isTyping = false; 
         document.getElementById('monad-input-text').readOnly = false;
         document.getElementById('monad-send-btn').disabled = false;
